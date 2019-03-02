@@ -16,12 +16,13 @@ Deployed website can be found at http://3.91.87.43.xip.io or http://3.91.87.43.
 2. Sign up for or login to [Amazon Lightsail](https://portal.aws.amazon.com/billing/signup?nc2=h_ct&src=header_signup&redirect_url=https%3A%2F%2Faws.amazon.com%2Fregistration-confirmation#/start) and click create an instance in Amazon Lightsail.  
   a. Select the Linux/Unix platform.  
   b. Select OS only, then Ubuntu 16.04 LTS.  
-  c. Choose an instance plan. There is an option that has one month free.   ![instance plans](instance_plans.png)  
+  c. Choose an instance plan. There is an option that has one month free.   ![instance plans](img/instance_plans.png)  
   d. Name your instance.  
   e. Copy your Public IP address and save in a note. **You will need this later.**  
 
 3. Go to the Account page in Amazon Lightsail and download the SSH key.  
-  a. Move the downloaded SSH key to the .ssh folder on your local machine and change the name to key.rsa.  ![download ssh key](download_key.png)  
+  a. Move the downloaded SSH key to the .ssh folder on your local machine and change the name to key.rsa.  ![download ssh key](img/download_key.png)  
+<br>  
 
 ### Connect to server
 4. Change the permissions on the .ssh folder and the SSH key by running `$ chmod 700 ~/.ssh/` then `$ chmod 600 ~/.ssh/key.rsa` in your terminal.  
@@ -61,7 +62,7 @@ Deployed website can be found at http://3.91.87.43.xip.io or http://3.91.87.43.
 
 15. Run `$ sudo service ssh restart` for changes to take effect.  
 
-16. Back in the Amazon Lightsail instance, change port number to **2200** under the Networking tab.  ![change port number](port_number.png)  
+16. Back in the Amazon Lightsail instance, change port number to **2200** under the Networking tab.  ![change port number](img/port_number.png)  
 
 17. Run `$ ssh -i ~/.ssh/grader_key -p 2200 grader@3.91.87.43` to restart the server on port 2200.  
 <br>  
@@ -86,7 +87,7 @@ Deployed website can be found at http://3.91.87.43.xip.io or http://3.91.87.43.
   ```  
 Add the above port options to the Amazon Lightsail Firewall.  
 
-![update port numbers](port_updating.png)  
+![update port numbers](img/port_updating.png)  
 <br>  
 
 ### Configure Apache and mod_wsgi
