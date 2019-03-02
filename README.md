@@ -10,7 +10,7 @@ Deployed website can be found at http://3.91.87.43.xip.io or http://3.91.87.43.
 
 <hr>  
 
-### Linux Server Setup and Configuration
+## Linux Server Setup and Configuration
 1. [Install](https://git-scm.com/downloads) and [set up](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup) Git.  
 
 2. Sign up for or login to [Amazon Lightsail](https://portal.aws.amazon.com/billing/signup?nc2=h_ct&src=header_signup&redirect_url=https%3A%2F%2Faws.amazon.com%2Fregistration-confirmation#/start) and click create an instance in Amazon Lightsail.  
@@ -23,14 +23,14 @@ Deployed website can be found at http://3.91.87.43.xip.io or http://3.91.87.43.
 3. Go to the Account page in Amazon Lightsail and download the SSH key.  
   a. Move the downloaded SSH key to the .ssh folder on your local machine and change the name to key.rsa.  ![download ssh key](download_key.png)  
 
-#### Connect to server
+### Connect to server
 4. Change the permissions on the .ssh folder and the SSH key by running `$ chmod 700 ~/.ssh/` then `$ chmod 600 ~/.ssh/key.rsa` in your terminal.  
 
 5. Connect to the server with `$ ssh -i ~/.ssh/key.rsa ubuntu@3.91.87.43` and replace 3.91.87.43 with the public IP address copied earlier.  
   a. The terminal will ask if you are sure you want to continue; type yes.  
 <br>  
 
-#### Create grader user and grant access
+### Create grader user and grant access
 6. Create a new user with the command `$ sudo adduser grader`.  
   a. Create a password for the user **grader** and confirm.  
 
@@ -66,7 +66,7 @@ Deployed website can be found at http://3.91.87.43.xip.io or http://3.91.87.43.
 17. Run `$ ssh -i ~/.ssh/grader_key -p 2200 grader@3.91.87.43` to restart the server on port 2200.  
 <br>  
 
-#### Configure timezone and UFW
+### Configure timezone and UFW
 18. Update and upgrade packages: `$ sudo apt-get update` and `$ sudo apt-get upgrade`.  
   a. When prompted, select install package maintainer's version.  
 
@@ -89,7 +89,7 @@ Add the above port options to the Amazon Lightsail Firewall.
 ![update port numbers](port_updating.png)  
 <br>  
 
-#### Configure Apache and mod_wsgi
+### Configure Apache and mod_wsgi
 21. Install Apache with: `$ sudo apt-get install apache2`.  
 22. In your browser, go to http://3.91.87.43/ to ensure Apache is functioning correctly. The Apache2 Default page should be displayed.  
 23. Install mod_wsgi with: `$ sudo apt-get install libapache2-mod-wsgi python-dev`.  
@@ -97,7 +97,7 @@ Add the above port options to the Amazon Lightsail Firewall.
 25. Restart Apache  `$ sudo service apache2 restart`.  
 <br>  
 
-#### Install PostgreSQL
+### Install PostgreSQL
 26. Install PostgreSQL: `$ sudo apt-get install postgresql`.  
 27. Ensure that PostgreSQL does not allow remote connections by running `$ sudo nano /etc/postgresql/9.5/main/pg_hba.conf`. You should see:  
 
@@ -116,7 +116,7 @@ Add the above port options to the Amazon Lightsail Firewall.
   ```  
 <br>  
 
-#### Create catalog user in PostgreSQL
+### Create catalog user in PostgreSQL
 28. Switch to **postgres** user: `$ sudo su - postgres` and connect to PostgreSQL with `$ psql`.  
 29. Create user **catalog** with `# CREATE ROLE catalog WITH PASSWORD 'catalog';`.  
 30. Allow **catalog** user create database permissions: `# ALTER USER catalog CREATEDB;`.  
@@ -127,7 +127,7 @@ Add the above port options to the Amazon Lightsail Firewall.
 35. Exit psql with `# \q`. Then, switch from **postgres** user to **grader** user with `$ exit`.  
 <br>  
 
-#### Create catalog user in Linux
+### Create catalog user in Linux
 36. Create a new user: `$ sudo adduser catalog`.  
   a. Create a password for the user **catalog** and confirm.  
 37. Grant sudo access to **catalog** user: `$ sudo visudo`.  
@@ -138,7 +138,7 @@ Add the above port options to the Amazon Lightsail Firewall.
 39. Create catalog database with `$ createdb catalog`, then exit **catalog** user with `$ exit`.  
 <br>  
 
-#### Clone catalog application
+### Clone catalog application
 40. Install Git: `$ sudo apt-get install git`.  
 41. Make a catalog directory: `$ sudo mkdir /var/www/catalog`.  
   a. Change directory: `$ cd /var/www/catalog`.  
@@ -147,7 +147,7 @@ Add the above port options to the Amazon Lightsail Firewall.
   b. Change directory: `$ cd catalog`.  
 <br>  
 
-#### Edit files for Linux server compatibility
+### Edit files for Linux server compatibility
 43. Rename project.py file: `$ sudo mv project.py __init__.py`.  
 44. Edit **init.py** file: `$ sudo nano __init__.py`.  
   a. Replace `app.run(host='0.0.0.0', port=8000)` with **`app.run()`**.  
@@ -157,7 +157,7 @@ Add the above port options to the Amazon Lightsail Firewall.
 45. Edit the create engine lines in both `database_setup.py` and `movies.py` files in the same manner as `__init__.py`: with **`engine = create_engine('postgresql://catalog:PASSWORD@localhost/catalog')`**.  
 <br>  
 
-#### Edit client secrets JSON file
+### Edit client secrets JSON file
 46. Create a new project in the Google API Developer console and download `client_secrets.json` file.  
 47. Update client secrets file: `$ sudo nano client_secrets.json`.  
   a. Copy and paste contents of downloaded JSON file, and save (Ctrl-X, Y, Enter).  
@@ -165,7 +165,7 @@ Add the above port options to the Amazon Lightsail Firewall.
   a. Replace new client ID from downloaded JSON file and save (Ctrl-X, Y, Enter).  
 <br>  
 
-#### Install packages
+### Install packages
 49. Install pip: `$ sudo apt-get install python-pip`.  
 50. Install dependencies.  
 
@@ -180,7 +180,7 @@ Add the above port options to the Amazon Lightsail Firewall.
   ```  
 <br>  
 
-#### Configure virtual host
+### Configure virtual host
 51. Create and configure a new virtual host: `$ sudo nano /etc/apache2/sites-available/catalog.conf`.  
   a. Add the following:  
 
@@ -210,7 +210,7 @@ Add the above port options to the Amazon Lightsail Firewall.
   a. Reload Apache: `$ sudo service apache2 reload`.  
 <br>  
 
-#### Configure wsgi file
+### Configure wsgi file
 53. Create and configure the .wsgi file: `$ sudo nano /var/www/catalog/catalog.wsgi`.  
   a. Add the following to the file:  
 
@@ -231,7 +231,7 @@ Add the above port options to the Amazon Lightsail Firewall.
   a. Reload Apache: `$ sudo service apache2 reload`.  
 <br>  
 
-#### Populate database
+### Populate database
 55. Setup database: `$ sudo python database_setup.py`.  
 56. Populate database: `$ sudo python movies.py`.  
 57. Reload Apache: `$ sudo service apache2 reload`.  
@@ -241,6 +241,6 @@ Add the above port options to the Amazon Lightsail Firewall.
 
 <hr>  
 
-### Acknowledgements
+## Acknowledgements
 * [golgtwins' Libraries.io](https://libraries.io/github/golgtwins/Udacity-P7-Linux-Server-Configuration)
 * [yiyupan's GitHub](https://github.com/yiyupan/Linux-Server-Configuration-Udacity-Full-Stack-Nanodegree-Project)
