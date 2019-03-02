@@ -3,10 +3,15 @@
 This file explains the process of creating a Linux-based server using [Amazon Lightsail](https://aws.amazon.com/lightsail/).  
 
 
-The Linux distribution is Ubuntu 16.04 LTS.
+* Linux distribution: Ubuntu 16.04 LTS  
+* Public IP address: 3.91.87.43  
+* SSH Port number: 2200  
+* HTTP Port number: 80  
+* Username & Password: **grader**  
+
 The hosted web application is my Item Catalog App created in the course of my Udacity Full Stack Developer Nanodegree.
 
-Deployed website can be found at http://3.91.87.43.xip.io or http://3.91.87.43.  
+The deployed website can be found at http://3.91.87.43.xip.io or http://3.91.87.43.  
 
 <hr>  
 
